@@ -1,31 +1,53 @@
 import './App.css'
 
 function App() {
-  const sendTextMessage = () => {
-    const androidInterface = window as unknown as { Android?: { postMessage: (message: string) => void } };
-    
+
+  const payload = {
+    type: "greeting",
+    user: "John Doe",
+    message: "Hello from React Web!",
+    timestamp: Date.now(),
+  };
+
+  // Define the Android interface type once to avoid repetition
+  type AndroidBridge = {
+    Android?: {
+      postMessage: (message: string) => void;
+    };
+  };
+
+  // Helper function to get the Android interface
+  const getAndroidInterface = (): AndroidBridge => {
+    return window as unknown as AndroidBridge;
+  };
+
+  const postMessageToAndroid = (message: string) => {
+    const androidInterface = getAndroidInterface();
     if (androidInterface.Android?.postMessage) {
-      androidInterface.Android.postMessage("Hello from React WebView 🚀");
+      androidInterface.Android.postMessage(message);
     } else {
       console.log("Android interface not found");
     }
   };
 
+
+  // Send a text message to the Android app
+  const sendTextMessage = () => {
+    postMessageToAndroid("Hello from React WebView 🚀");
+  };
+
+  // Send a JSON payload to the Android app
   const sendJsonPayload = () => {
-    const androidInterface = window as unknown as { Android?: { postMessage: (message: any) => void } };
-    
-    if (androidInterface.Android?.postMessage) {
-      androidInterface.Android.postMessage({ message: "Hello from React WebView 🚀" });
-    } else {
-      console.log("Android interface not found");
-    }
+    postMessageToAndroid(JSON.stringify(payload));
   };
 
   return (
     <div style={{ padding: 20 }}>
       <h2>React Web App inside WebView</h2>
-      <button onClick={sendTextMessage}>Send Message to Android</button>
-      <button onClick={sendJsonPayload}>Send JSON payload to Android</button>
+      <div style={{ display: 'flex', gap: 10 }}>
+        <button onClick={sendTextMessage}>Send Message to Android</button>
+        <button onClick={sendJsonPayload}>Send JSON payload to Android</button>
+      </div>
     </div>
   );
 }
