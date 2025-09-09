@@ -37,9 +37,7 @@ function App() {
   return (
     <div style={{ padding: 20 }}>
       <h2>React Web App inside WebView</h2>
-      <div style={{ display: 'flex', gap: 10 }}>
-        <button onClick={sendJsonPayload}>Send JSON payload to Android</button>
-      </div>
+      <button onClick={sendJsonPayload}>Send JSON payload to Android</button>
     </div>
   );
 }
