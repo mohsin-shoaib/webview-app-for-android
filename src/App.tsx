@@ -30,13 +30,6 @@ function App() {
     }
   };
 
-
-  // Send a text message to the Android app
-  const sendTextMessage = () => {
-    postMessageToAndroid("Hello from React WebView 🚀");
-  };
-
-  // Send a JSON payload to the Android app
   const sendJsonPayload = () => {
     postMessageToAndroid(JSON.stringify(payload));
   };
@@ -45,7 +38,6 @@ function App() {
     <div style={{ padding: 20 }}>
       <h2>React Web App inside WebView</h2>
       <div style={{ display: 'flex', gap: 10 }}>
-        <button onClick={sendTextMessage}>Send Message to Android</button>
         <button onClick={sendJsonPayload}>Send JSON payload to Android</button>
       </div>
     </div>
